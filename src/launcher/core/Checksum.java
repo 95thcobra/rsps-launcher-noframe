@@ -5,7 +5,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.Scanner;
 
 import launcher.Configuration;
@@ -29,9 +31,13 @@ public class Checksum {
 		String version = "";
 		try {
 			URL url = new URL(Configuration.CLIENT_VERSION_URL);
-			Scanner s = new Scanner(url.openStream());
-			version = s.nextLine();
-			s.close();
+			URLConnection uc = url.openConnection();
+			uc.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
+			BufferedReader in = new BufferedReader(new InputStreamReader(uc.getInputStream()));
+			//Scanner s = new Scanner(url.openStream());
+			version = in.readLine();//s.nextLine();
+			//s.close();
+			in.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

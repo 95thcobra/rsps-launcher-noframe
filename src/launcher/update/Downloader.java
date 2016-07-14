@@ -54,6 +54,7 @@ public class Downloader extends Observable implements Runnable {
 		InputStream stream = null;
 		try {
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			connection.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
 			connection.setRequestProperty("Range", "bytes=" + downloaded + "-");
 			connection.connect();
 
